@@ -49,20 +49,29 @@ public class viewController {
     @FXML
     private void playAction(ActionEvent E){
 
-        File file = new File("123.mp4");
-        String URI = file.toURI().toString();
-        Media creation = new Media(URI);
-        MediaPlayer player = new MediaPlayer(creation);
-        mediaView.setMediaPlayer(player);
-        player.play();
+        creationObject creation = creationsView.getSelectionModel().getSelectedItem();
+        if (creation != null) {
+            File file = creation.getSourceFile();
+            String URI = file.toURI().toString();
+            Media creationMedia = new Media(URI);
+            MediaPlayer player = new MediaPlayer(creationMedia);
+            mediaView.setMediaPlayer(player);
+            player.play();
+        }
 
         playButton.setText("Playing");
 
     }
 
     @FXML
-    private void deleteAction(ActionEvent E){
-        deleteButton.setText("Pressed");
+    private void deleteAction(ActionEvent E) throws Exception{
+        creationObject creation = creationsView.getSelectionModel().getSelectedItem();
+        if (creation != null) {
+            BashCommandProcessor deleter = new BashCommandProcessor();
+            deleter.deleteCreation(creation.toString());
+            creationsView.getItems().remove(creationsView.getSelectionModel().getSelectedItem());
+            deleteButton.setText("Pressed");
+        }
     }
 
     @FXML
