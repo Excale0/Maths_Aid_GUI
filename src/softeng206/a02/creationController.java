@@ -1,4 +1,4 @@
-package sample;
+package softeng206.a02;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

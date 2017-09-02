@@ -1,4 +1,4 @@
-package sample;
+package softeng206.a02;
 
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -67,10 +67,7 @@ public class viewController {
             alert.setTitle("Error");
             alert.showAndWait();
         } else {
-            String creationCommand = "ffmpeg -f lavfi -i color=c=blue:s=1280x720:d=3 -vf " +
-                    "drawtext=fontsize=60: \\ fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=\"$creationName\"\" " +
-                    "./Temporary_files/${creationName}.mp4 &> /dev/null";
-            ProcessBuilder creationProcess = new ProcessBuilder("/bin/bash","-c",creationCommand);
+
         }
 
 
