@@ -1,18 +1,32 @@
 package softeng206.a02;
 
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class viewController {
+
+    @FXML
+    public void initialize(){
+        File creationsFolder = new File("./Creations/");
+        File[] files = creationsFolder.listFiles();
+        List<creationObject> creationFiles = new ArrayList<>();
+        for (File creation: files){
+            creationObject temporary = new creationObject(creation);
+            creationFiles.add(temporary);
+        }
+        ObservableList<creationObject> creationList = FXCollections.observableList(creationFiles);
+        creationsView.setItems(creationList);
+    }
 
     @FXML
     private Button playButton;
@@ -27,7 +41,7 @@ public class viewController {
     private Button createButton;
 
     @FXML
-    private TableView creationsTable;
+    protected ListView<creationObject> creationsView;
 
     @FXML
     private TextField creationTextField;
@@ -75,6 +89,8 @@ public class viewController {
             } else {
                 videoWorker videoCreator = new videoWorker(creationName);
                 videoCreator.call();
+                audioCreationWorker audioCreator = new audioCreationWorker(creationName);
+                audioCreator.call();
             }
 
         }
