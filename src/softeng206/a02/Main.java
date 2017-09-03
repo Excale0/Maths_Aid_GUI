@@ -13,6 +13,7 @@ public class Main extends Application {
         BashCommandProcessor processor = new BashCommandProcessor();
         processor.createFolders();
         Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Maths Aid");
         primaryStage.setScene(new Scene(root, 720, 480));
         primaryStage.show();

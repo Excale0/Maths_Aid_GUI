@@ -12,6 +12,7 @@ import javafx.scene.media.MediaView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class viewController {
 
@@ -44,7 +45,8 @@ public class viewController {
     protected ListView<creationObject> creationsView;
 
     @FXML
-    private TextField creationTextField;
+    private Tab creationTab;
+
 
     @FXML
     private void playAction(ActionEvent E){
@@ -67,46 +69,17 @@ public class viewController {
     private void deleteAction(ActionEvent E) throws Exception{
         creationObject creation = creationsView.getSelectionModel().getSelectedItem();
         if (creation != null) {
-            BashCommandProcessor deleter = new BashCommandProcessor();
-            deleter.deleteCreation(creation.toString());
-            creationsView.getItems().remove(creationsView.getSelectionModel().getSelectedItem());
-            deleteButton.setText("Pressed");
-        }
-    }
-
-    @FXML
-    private void createAction(ActionEvent E) throws Exception{
-        String creationName = creationTextField.getCharacters().toString().trim();
-        if (creationName.isEmpty()) {
-            String errorMsg = "Please enter a name in the field before pressing create.";
-            Alert alert = new Alert(Alert.AlertType.INFORMATION,errorMsg);
-            alert.getDialogPane().setMinWidth(500);
-            alert.getDialogPane().setHeaderText("Error");
-            alert.setTitle("Error");
-            alert.showAndWait();
-        } else {
-            BashCommandProcessor processor = new BashCommandProcessor();
-            String alertMsg;
-            if (processor.creationExists(creationName)){
-                alertMsg = "A creation with the file name you have specified already exists. \n Would" +
-                        "you like to overwrite?";
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,alertMsg);
-                alert.getDialogPane().setMinWidth(500);
-                alert.getDialogPane().setHeaderText("Error");
-                alert.setTitle("Error");
-                alert.showAndWait();
-            } else {
-                videoWorker videoCreator = new videoWorker(creationName);
-                videoCreator.call();
-                audioCreationWorker audioCreator = new audioCreationWorker(creationName);
-                audioCreator.call();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Are you sure you want to delete creation "+creation.toString());
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                BashCommandProcessor deleter = new BashCommandProcessor();
+                deleter.deleteCreation(creation.toString());
+                creationsView.getItems().remove(creationsView.getSelectionModel().getSelectedItem());
             }
-
         }
-
-
-
     }
+
 
 
 
