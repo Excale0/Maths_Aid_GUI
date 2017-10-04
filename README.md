@@ -1,7 +1,6 @@
 # Maths_Aid_GUI
-Implementation of the Maths authoring aid program in a JavaFX GUI. This application utilises a trained HTK model for recognition of Maori words
+This is a JavaFX implementation of a video creator and manager for number videos. It was designed to be used in a linux system with ffmpeg
+installed. ffmpeg is used for installation and creation of the video.
 
 # Contributors
 Raymond Wang 
-
-Menake 
